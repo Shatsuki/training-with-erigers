@@ -38,8 +38,10 @@
     </head>
     <body>
         <div id="div">
-            <input id="input" type="text" v-model="newTask" v-on:keyup.enter="addTask" v-focus/>
-            <button v-on:click="addTask">add task</button>
+            <form @submit.prevent="addTask" method="post" novalidate="true">
+                <input id="input" type="text" v-model="newTask" v-focus/>
+                <button type="submit">add task</button>
+            </form>
             <ul id="ul">
                 <li class="list-item" v-for="task in tasks">{{ task }}</li>
             </ul> 
@@ -66,11 +68,10 @@
                 },
                 directives: {
                     focus: {
-                     // directive definition
-                         inserted: function (el) {
+                        inserted: function (el) {
                               el.focus()
-                             }
-                     }
+                        }
+                    }
                 }
             })
 
