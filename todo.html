@@ -8,6 +8,7 @@
                 margin-left: 5%;
                 margin-bottom: 5%;
                 height: 35px;
+                outline: none;
             }
             #div{
                 text-align: center;
@@ -37,7 +38,7 @@
     </head>
     <body>
         <div id="div">
-            <input id="input" type="text" v-model="newTask">
+            <input id="input" type="text" v-model="newTask" v-on:keyup.enter="addTask" v-focus/>
             <button v-on:click="addTask">add task</button>
             <ul id="ul">
                 <li class="list-item" v-for="task in tasks">{{ task }}</li>
@@ -62,6 +63,14 @@
                         this.tasks.push(this.newTask);
                         this.newTask = '';
                     }
+                },
+                directives: {
+                    focus: {
+                     // directive definition
+                         inserted: function (el) {
+                              el.focus()
+                             }
+                     }
                 }
             })
 
