@@ -1,10 +1,13 @@
 <template>
   <div id="mainDiv">
-    <button id="button" @click="isActive = !isActive">Start</button>
+    <button v-show="button" id="outerButton" @click="toggle1">Start</button>
     <div v-show="isActive" id="dataBlock">
       <h1>Full-View Match Data</h1>
-      <div class="infoDiv">
-        <h2>Select as Match of the Day</h2>
+      <div class="infovDi">
+        <h2 id="innerText1">Select as Match of the Day</h2>
+        <div>
+          <img id="icon1" src="../static/checkmark-circle-2-outline.svg" />
+        </div>
       </div>
       <h3 class="innerTitle">Update Final Result</h3>
       <div class="infoDiv">
@@ -20,12 +23,16 @@
           class="teamLogo"
           src="https://media.discordapp.net/attachments/765526099924877332/773221705153904690/manchester_united.png"
         />
+        <img id="icon2" src="../static/cloud-upload-outline.svg" />
       </div>
       <h3 class="innerTitle">Update Start Date Time</h3>
       <div id="lastInnerDiv" class="infoDiv">
-        <h3>a</h3>
+        <h3 id="innerText2">xx / xx / xx - xx : xx</h3>
+        <a href="/">
+          <img id="icon3" src="../static/cloud-upload-outline.svg" />
+        </a>
       </div>
-      <button id="button" @click="isActive = !isActive">Close Full View</button>
+      <button id="innerButton" @click="toggle2">Close Full View</button>
     </div>
   </div>
 </template>
@@ -34,7 +41,18 @@ export default {
   data() {
     return {
       isActive: false,
+      button: true,
     }
+  },
+  methods: {
+    toggle2() {
+      this.isActive = false
+      this.button = true
+    },
+    toggle1() {
+      this.isActive = true
+      this.button = false
+    },
   },
 }
 </script>
@@ -78,14 +96,58 @@ h1 {
 #logo1 {
   padding-left: 20%;
 }
-#button {
+#outerButton {
+  background-color: white;
+  outline: none;
+  margin-top: 25%;
+  margin-left: 47%;
+}
+#outerButton:hover {
+  background-color: gray;
+}
+#innerButton {
   background-color: white;
   outline: none;
 }
-#button:hover {
+#innerButton:hover {
   background-color: gray;
 }
 #lastInnerDiv {
   margin-bottom: 5%;
+}
+#innerText1 {
+  float: left;
+  margin-left: 32%;
+}
+#innerText2 {
+  float: left;
+  margin-left: 40%;
+  margin-top: 1%;
+}
+#icon1 {
+  width: 50px;
+  background-color: rgb(73, 93, 245);
+  border-radius: 5px;
+}
+#icon2 {
+  width: 50px;
+  background-color: rgb(247, 72, 209);
+  margin-top: 7%;
+  border-radius: 5px;
+}
+#icon3 {
+  width: 50px;
+  background-color: rgb(247, 72, 209);
+  margin-top: auto;
+  border-radius: 5px;
+}
+#icon1:hover {
+  background-color: rgb(40, 60, 200);
+}
+#icon2:hover {
+  background-color: rgb(200, 50, 170);
+}
+#icon3:hover {
+  background-color: rgb(200, 50, 170);
 }
 </style>
