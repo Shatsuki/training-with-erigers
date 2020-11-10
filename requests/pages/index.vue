@@ -1,50 +1,72 @@
 <template>
-  <div class="container">
-    <pre>{{ ip }}</pre>
+  <div class="container todo-list">
+    <pre>
+      <ul>
+        <li
+          v-for="(todo, index) in todos"
+          :key="`todo-${index}`"
+          class="list-item"
+        >
+          <pre>
+            {{ todo.title }}
+          </pre>
+          <button><router-link :to="{ path: `todo/${todo.id}` }">edit</router-link></button>
+        </li>
+      </ul>
+    </pre>
   </div>
 </template>
 
 <script>
 export default {
-  async asyncData(context) {
-    console.log(context)
-    const ip = await context.$axios.$get(
+  name: 'TodoList',
+  async asyncData ({ $axios }) {
+    const todos = await $axios.$get(
       'https://jsonplaceholder.typicode.com/todos'
     )
-    return { ip }
+    return { todos }
   },
+  methods: {
+    goToEdit (id) {
+      document.location.href = `/edit${id}`
+    }
+  }
 }
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+#input {
+  margin-left: 5%;
+  margin-bottom: 5%;
+  height: 35px;
+  outline: none;
+}
+
+#div {
   text-align: center;
+  margin-top: 5%;
 }
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+#ul {
+  list-style-type: none;
+  border: red solid 2px;
+  border-bottom: none;
+  margin: 0 30%;
+  padding-inline-start: 0;
+  background-color: rgb(50, 0, 0);
+  box-shadow: rgb(0, 0, 0) 10px 10px;
 }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
+.list-item {
+  color: red;
+  padding: 1em 0;
+  border-bottom: red solid 2px;
+  font-size: 35px;
+  text-shadow: rgb(128, 0, 0) 2px 2px;
 }
 
-.links {
-  padding-top: 15px;
+button {
+  background-color: rgba(0, 0, 0, 0);
+  color: blue;
 }
 </style>
