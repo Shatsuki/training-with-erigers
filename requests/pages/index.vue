@@ -1,19 +1,22 @@
 <template>
-  <div class="container todo-list">
-    <pre>
-      <ul>
+  <div id="container" class="todo-list">
+    <div id="div">
+      <ul id="ul">
         <li
           v-for="(todo, index) in todos"
           :key="`todo-${index}`"
           class="list-item"
         >
-          <pre>
-            {{ todo.title }}
-          </pre>
-          <button><router-link :to="{ path: `todo/${todo.id}` }">edit</router-link></button>
+          {{ todo.title }}
+          {{ todo.description }}
+          <br>
+          <router-link :to="{ path: `todo/${todo.id}` }">
+          <button>edit</button>
+          </router-link>
+          <button @click="deleteTodo(todo.id)">delete</button>
         </li>
       </ul>
-    </pre>
+    </div>
   </div>
 </template>
 
@@ -27,14 +30,22 @@ export default {
     return { todos }
   },
   methods: {
-    goToEdit (id) {
-      document.location.href = `/edit${id}`
+    deleteTodo (index) {
+      if (confirm('Are you sure you want to delete this todo?')) {
+        this.$axios.delete('', {
+          id: index
+        })
+      }
     }
   }
 }
 </script>
 
 <style>
+body {
+  background-color: rgb(18, 22, 22);
+}
+
 #input {
   margin-left: 5%;
   margin-bottom: 5%;
@@ -55,6 +66,7 @@ export default {
   padding-inline-start: 0;
   background-color: rgb(50, 0, 0);
   box-shadow: rgb(0, 0, 0) 10px 10px;
+  padding: 0;
 }
 
 .list-item {
@@ -67,6 +79,6 @@ export default {
 
 button {
   background-color: rgba(0, 0, 0, 0);
-  color: blue;
+  color: white;
 }
 </style>
