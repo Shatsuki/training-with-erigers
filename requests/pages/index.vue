@@ -8,12 +8,15 @@
           class="list-item"
         >
           {{ todo.title }}
-          {{ todo.description }}
           <br>
           <router-link :to="{ path: `todo/${todo.id}` }">
-          <button>edit</button>
+            <button>
+              edit
+            </button>
           </router-link>
-          <button @click="deleteTodo(todo.id)">delete</button>
+          <button @click="deleteTodo(todo.id)">
+            delete
+          </button>
         </li>
       </ul>
     </div>
@@ -24,15 +27,20 @@
 export default {
   name: 'TodoList',
   async asyncData ({ $axios }) {
-    const todos = await $axios.$get(
-      'https://jsonplaceholder.typicode.com/todos'
-    )
-    return { todos }
+    try {
+      const todos = await $axios.$get(
+        'http://aad73eb80051.ngrok.io/todos'
+      )
+      return { todos }
+    } catch (error) {
+      console.error(error)
+      return { todos: [] }
+    }
   },
   methods: {
     deleteTodo (index) {
       if (confirm('Are you sure you want to delete this todo?')) {
-        this.$axios.delete('', {
+        this.$axios.delete('http://aad73eb80051.ngrok.io/todos', {
           id: index
         })
       }
