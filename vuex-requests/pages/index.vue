@@ -1,73 +1,90 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        vuex-requests
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
+  <div id="container" class="todo-list">
+    <div id="div">
+      <ul id="ul">
+        <li
+          v-for="(todo, index) in todos"
+          :key="`todo-${index}`"
+          class="list-item"
         >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+          {{ todo.title }}
+          <br>
+          <router-link :to="{ path: `todo/${todo.id}` }">
+            <button>
+              edit
+            </button>
+          </router-link>
+          <button @click="deleteTodo(todo.id)">
+            delete
+          </button>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'TodoList',
+  mounted: {
+    getTodos () {
+      return { todos: this.$store.dispach('asyncData') }
+    }
+  },
+  methods: {
+    async deleteTodo (index) {
+      if (confirm('Are you sure you want to delete this todo?')) {
+        try {
+          await this.$axios.delete('http://3553f6909ef7.ngrok.io/todos', {
+            id: index
+          })
+        } catch (error) {
+          console.error(error)
+        }
+      }
+    }
+  }
+}
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+body {
+  background-color: rgb(18, 22, 22);
+}
+
+#input {
+  margin-left: 5%;
+  margin-bottom: 5%;
+  height: 35px;
+  outline: none;
+}
+
+#div {
   text-align: center;
+  margin-top: 5%;
 }
 
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+#ul {
+  list-style-type: none;
+  border: red solid 2px;
+  border-bottom: none;
+  margin: 0 20%;
+  padding-inline-start: 0;
+  background-color: rgb(50, 0, 0);
+  box-shadow: rgb(0, 0, 0) 10px 10px;
+  padding: 0;
 }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
+.list-item {
+  color: red;
+  padding: 5% 0;
+  border-bottom: red solid 2px;
+  font-size: 35px;
+  text-shadow: rgb(128, 0, 0) 2px 2px;
 }
 
-.links {
-  padding-top: 15px;
+button {
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
 }
 </style>

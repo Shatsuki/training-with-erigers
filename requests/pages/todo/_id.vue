@@ -22,7 +22,7 @@ export default {
   async asyncData ({ $axios }) {
     try {
       const todos = await $axios.$get(
-        'http://839eab7a10cc.ngrok.io/todos'
+        'http://3553f6909ef7.ngrok.io/todos'
       )
       return { todos }
     } catch (error) {
@@ -42,7 +42,7 @@ export default {
     async sendPost () {
       if (this.givenTitle && this.givenDescription) {
         try {
-          await this.$axios.post('http://839eab7a10cc.ngrok.io/todos', {
+          await this.$axios.post('http://3553f6909ef7.ngrok.io/todos', {
             id: this.todos[this.$route.params.id],
             title: this.givenTitle
           })

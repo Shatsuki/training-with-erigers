@@ -29,7 +29,7 @@ export default {
   async asyncData ({ $axios }) {
     try {
       const todos = await $axios.$get(
-        'http://839eab7a10cc.ngrok.io/todos'
+        'http://3553f6909ef7.ngrok.io/todos'
       )
       return { todos }
     } catch (error) {
@@ -41,7 +41,7 @@ export default {
     async deleteTodo (index) {
       if (confirm('Are you sure you want to delete this todo?')) {
         try {
-          await this.$axios.delete('http://839eab7a10cc.ngrok.io/todos', {
+          await this.$axios.delete('http://3553f6909ef7.ngrok.io/todos', {
             id: index
           })
         } catch (error) {
@@ -74,7 +74,7 @@ body {
   list-style-type: none;
   border: red solid 2px;
   border-bottom: none;
-  margin: 0 30%;
+  margin: 0 20%;
   padding-inline-start: 0;
   background-color: rgb(50, 0, 0);
   box-shadow: rgb(0, 0, 0) 10px 10px;
@@ -83,7 +83,7 @@ body {
 
 .list-item {
   color: red;
-  padding: 1em 0;
+  padding: 5% 0;
   border-bottom: red solid 2px;
   font-size: 35px;
   text-shadow: rgb(128, 0, 0) 2px 2px;
