@@ -26,9 +26,10 @@
 <script>
 export default {
   name: 'TodoList',
-  mounted: {
-    getTodos () {
-      return { todos: this.$store.dispach('asyncData') }
+  computed: {
+    todos () {
+      console.log(this.$store.dispatch(''))
+      return this.$store.state.todos
     }
   },
   methods: {
