@@ -19,6 +19,17 @@
 
 <script>
 export default {
+  async asyncData ({ $axios }) {
+    try {
+      const todos = await $axios.$get(
+        'http://839eab7a10cc.ngrok.io/todos'
+      )
+      return { todos }
+    } catch (error) {
+      console.error(error)
+      return { todos: [] }
+    }
+  },
   data () {
     return {
       todos: [],
@@ -27,25 +38,19 @@ export default {
       saveMessage: null
     }
   },
-  created () {
-    this.getTodo()
-  },
   methods: {
-    async getTodo () {
-      const data = await this.$axios.$get('http://aad73eb80051.ngrok.io/todos')
-      this.todos = data
-    },
-    sendPost () {
+    async sendPost () {
       if (this.givenTitle && this.givenDescription) {
-        this.$axios.post('http://aad73eb80051.ngrok.io/todos', { // linku duhet ketu
-          id: this.todos[this.$route.params.id],
-          title: this.givenTitle
-        }).then((response) => {
-          this.saveMessage = 'Changes saved!'
-        }, (error) => {
+        try {
+          await this.$axios.post('http://839eab7a10cc.ngrok.io/todos', {
+            id: this.todos[this.$route.params.id],
+            title: this.givenTitle
+          })
+          this.saveMessage = 'Changes Saved!'
+        } catch (error) {
           this.saveMessage = 'Change failed!'
           console.error(error)
-        })
+        }
         this.givenTitle = ''
         this.givenDescription = ''
       } else if (!this.givenTitle && this.givenDescription) {
