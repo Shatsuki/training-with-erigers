@@ -8,7 +8,7 @@
     </p>
     <pre>
       <p>{{ todos[this.$route.params.id - 1] }}</p>
-      <form method="post" @submit.prevent="sendPost">
+      <form method="post" @submit.prevent="sendPost(this.$route.params.id)">
         <input v-model="givenTitle" placeholder="Title" type="text">
         <input v-model="givenDescription" placeholder="Description" type="text">
         <button type="submit">Save Changes</button>
@@ -22,7 +22,7 @@ export default {
   async asyncData ({ $axios }) {
     try {
       const todos = await $axios.$get(
-        'http://3553f6909ef7.ngrok.io/todos'
+        'http://dd03b32c2c18.ngrok.io/todos'
       )
       return { todos }
     } catch (error) {
@@ -39,11 +39,10 @@ export default {
     }
   },
   methods: {
-    async sendPost () {
+    async sendPost (index) {
       if (this.givenTitle && this.givenDescription) {
         try {
-          await this.$axios.post('http://3553f6909ef7.ngrok.io/todos', {
-            id: this.todos[this.$route.params.id],
+          await this.$axios.post(`http://dd03b32c2c18.ngrok.io/todos/${index}`, {
             title: this.givenTitle
           })
           this.saveMessage = 'Changes Saved!'

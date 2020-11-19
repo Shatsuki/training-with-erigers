@@ -14,7 +14,7 @@
               edit
             </button>
           </router-link>
-          <button @click="deleteTodo(todo.id)">
+          <button @click="deleteTodo(index)">
             delete
           </button>
         </li>
@@ -24,21 +24,20 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'TodoList',
-  computed: {
-    todos () {
-      console.log(this.$store.dispatch(''))
-      return this.$store.state.todos
-    }
+  fetch () {
+    return this.$store.dispatch('todo/getTodos')
   },
+  computed: mapGetters('todo', ['todos']),
   methods: {
+    ...mapActions('todo', ['deleteTodoById']),
     async deleteTodo (index) {
       if (confirm('Are you sure you want to delete this todo?')) {
         try {
-          await this.$axios.delete('http://3553f6909ef7.ngrok.io/todos', {
-            id: index
-          })
+          await this.deleteTodoById(index)
         } catch (error) {
           console.error(error)
         }

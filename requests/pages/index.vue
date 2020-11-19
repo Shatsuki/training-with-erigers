@@ -29,7 +29,7 @@ export default {
   async asyncData ({ $axios }) {
     try {
       const todos = await $axios.$get(
-        'http://3553f6909ef7.ngrok.io/todos'
+        'http://dd03b32c2c18.ngrok.io/todos'
       )
       return { todos }
     } catch (error) {
@@ -41,9 +41,7 @@ export default {
     async deleteTodo (index) {
       if (confirm('Are you sure you want to delete this todo?')) {
         try {
-          await this.$axios.delete('http://3553f6909ef7.ngrok.io/todos', {
-            id: index
-          })
+          await this.$axios.delete(`http://dd03b32c2c18.ngrok.io/todos/${index}`)
         } catch (error) {
           console.error(error)
         }
