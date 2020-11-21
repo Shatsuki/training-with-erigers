@@ -33,7 +33,7 @@ export const actions = {
   },
   async sendSignUpData ({ state }) {
     try {
-      await this.$axios.$post(process.env.SIGN_UP, { // env problem
+      await this.$axios.$post(`${process.env.BaseUrl}/users/signup`, {
         username: state.username,
         email: state.email,
         password: state.password
@@ -42,8 +42,7 @@ export const actions = {
   },
   async sendSignInData (emailR, passwordR) {
     try {
-      alert(process.env.SIGN_IN)
-      await this.$axios.$post(process.env.SIGN_IN, { // env problem
+      await this.$axios.$post(`${process.env.BaseUrl}/users/signin`, { // env problem
         email: emailR,
         password: passwordR
       })
