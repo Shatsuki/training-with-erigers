@@ -1,0 +1,16 @@
+[
+  {
+    "name": "todo-id",
+    "path": "/todo/:id?",
+    "component": "C:\\\\Users\\\\Shatsuki\\\\Documents\\\\GitHub\\\\training-with-erigers\\\\requests\\\\pages\\\\todo\\\\_id.vue",
+    "chunkName": "pages/todo/_id",
+    "_name": "_48ef5aca"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "C:\\\\Users\\\\Shatsuki\\\\Documents\\\\GitHub\\\\training-with-erigers\\\\requests\\\\pages\\\\index.vue",
+    "chunkName": "pages/index",
+    "_name": "_1583b239"
+  }
+]
