@@ -1,46 +1,56 @@
 <template>
-  <div id="container" class="todo-list">
-    <div id="div">
-      <ul id="ul">
-        <li
-          v-for="(todo, index) in todos"
-          :key="`todo-${index}`"
-          class="list-item"
-        >
-          {{ todo.title }}
-          <br>
-          <router-link :to="{ path: `todo/${todo.id}` }">
-            <button>
-              edit
-            </button>
-          </router-link>
-          <button @click="deleteTodo(index)">
-            delete
-          </button>
-        </li>
-      </ul>
+  <div id="container" class="login">
+    <div v-show="showButtons" id="buttonsDiv">
+      <button @click="activateSignUp">
+        Sign up
+      </button>
+      <button @click="activateSignIn">
+        Sign in
+      </button>
     </div>
+    <form v-show="showSignIn" id="signInForm" @submit="sendSignInData(user.email, user.password)">
+      <input v-model="user.email" type="email" placeholder="email"><br>
+      <input v-model="user.password" type="password" placeholder="password"><br>
+      <input id="inpButton" type="submit" value="Sign in"><br>
+    </form>
+    <form v-show="showSignUp" id="signUpForm" @submit="setValues(user.username, user.password, user.cpassword, user.email)">
+      <input v-model="user.username" type="text" placeholder="username">
+      <input v-model="user.email" type="email" placeholder="email"><br>
+      <input v-model="user.password" type="password" placeholder="password">
+      <input v-model="user.cpassword" type="password" placeholder="confirm password"><br>
+      <input id="inpButton" type="submit" value="Sign up">
+    </form>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-
 export default {
   name: 'TodoList',
-  fetch () {
-    return this.$store.dispatch('todo/getTodos')
+  data () {
+    return {
+      showSignIn: false,
+      showSignUp: false,
+      showButtons: true
+    }
   },
-  computed: mapGetters('todo', ['todos']),
+  computed: mapGetters('info', ['user']),
   methods: {
-    ...mapActions('todo', ['deleteTodoById']),
-    async deleteTodo (index) {
-      if (confirm('Are you sure you want to delete this todo?')) {
-        try {
-          await this.deleteTodoById(index)
-        } catch (error) {
-          console.error(error)
-        }
+    activateSignUp () {
+      this.showSignUp = !this.showSignUp
+      this.showButtons = false
+    },
+    activateSignIn () {
+      this.showSignIn = !this.showSignIn
+      this.showButtons = false
+    },
+    ...mapActions('info', ['setUsername', 'setPassword', 'setEmail', 'sendSignUpData', 'sendSignInData']),
+    setValues (username, password, cpassword, email) {
+      if (password === cpassword) {
+        this.setUsername(username)
+        this.setPassword(password)
+        this.setEmail(email)
+        this.sendSignUpData()
       }
     }
   }
@@ -52,39 +62,25 @@ body {
   background-color: rgb(18, 22, 22);
 }
 
-#input {
-  margin-left: 5%;
-  margin-bottom: 5%;
-  height: 35px;
-  outline: none;
+#signUpForm {
+  margin: 17% 40%;
 }
 
-#div {
-  text-align: center;
-  margin-top: 5%;
+#signInForm {
+  margin: 20% 40%;
 }
 
-#ul {
-  list-style-type: none;
-  border: red solid 2px;
-  border-bottom: none;
-  margin: 0 20%;
-  padding-inline-start: 0;
-  background-color: rgb(50, 0, 0);
-  box-shadow: rgb(0, 0, 0) 10px 10px;
-  padding: 0;
+#buttonsDiv {
+  margin: 20% 45%;
 }
 
-.list-item {
-  color: red;
-  padding: 5% 0;
-  border-bottom: red solid 2px;
-  font-size: 35px;
-  text-shadow: rgb(128, 0, 0) 2px 2px;
-}
-
-button {
-  background-color: rgba(0, 0, 0, 0);
+button:hover {
   color: white;
+  background-color: black;
+}
+
+#inpButton:hover {
+  color: white;
+  background-color: black;
 }
 </style>
