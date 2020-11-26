@@ -9,15 +9,15 @@
       </button>
     </div>
     <form v-show="showSignIn" id="signInForm" @submit="sendSignInData(user.email, user.password)">
-      <input v-model="user.email" type="email" placeholder="email"><br>
-      <input v-model="user.password" type="password" placeholder="password"><br>
+      <input :value="user.email" type="email" placeholder="email"><br>
+      <input :value="user.password" type="password" placeholder="password"><br>
       <input id="inpButton" type="submit" value="Sign in"><br>
     </form>
     <form v-show="showSignUp" id="signUpForm" @submit="setValues(user.username, user.password, user.cpassword, user.email)">
-      <input v-model="user.username" type="text" placeholder="username">
-      <input v-model="user.email" type="email" placeholder="email"><br>
-      <input v-model="user.password" type="password" placeholder="password">
-      <input v-model="user.cpassword" type="password" placeholder="confirm password"><br>
+      <input :value="user.username" type="text" placeholder="username">
+      <input :value="user.email" type="email" placeholder="email"><br>
+      <input :value="user.password" type="password" placeholder="password">
+      <input :value="user.cpassword" type="password" placeholder="confirm password"><br>
       <input id="inpButton" type="submit" value="Sign up">
     </form>
   </div>

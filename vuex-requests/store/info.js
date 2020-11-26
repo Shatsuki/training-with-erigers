@@ -33,21 +33,24 @@ export const actions = {
   },
   async sendSignUpData ({ state }) {
     try {
-      await this.$axios.$post(process.env.SIGN_UP, { // env problem
+      await this.$axios.post('http://aa053b3e5a5f.ngrok.io/users/signup', {
         username: state.username,
         email: state.email,
         password: state.password
       })
-    } catch (error) {}
+    } catch (error) {
+      alert(error)
+    }
   },
   async sendSignInData (emailR, passwordR) {
     try {
-      alert(process.env.SIGN_IN)
-      await this.$axios.$post(process.env.SIGN_IN, { // env problem
+      await this.$axios.post('http://aa053b3e5a5f.ngrok.io/users/login', {
         email: emailR,
         password: passwordR
       })
-    } catch (error) {}
+    } catch (error) {
+      alert(`${error}haha`)
+    }
   }
 }
 
